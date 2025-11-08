@@ -1,0 +1,9 @@
+[project]
+name = "text-to-sql-chatbot-with-rag"
+version = "0.1.0"
+description = "A Text-to-SQL Chatbot with RAG, LangChain, FastAPI And Streamlit"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.121.0",
+]
