@@ -70,8 +70,8 @@ def main():
     tables = [t[0] for t in cur.fetchall()]
     logging.info("Indexing %d tables.", len(tables))
 
-    for t in tqdm(tables, desc="Indexing tables"):
-        index_table(conn, t)
+    for table in tqdm(tables, desc="Indexing tables"):
+        index_table(conn, table)
 
     conn.close()
     logging.info("Indexing complete and persisted in Chroma.")
