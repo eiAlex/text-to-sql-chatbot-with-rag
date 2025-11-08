@@ -41,7 +41,7 @@ def row_to_text(table, cols, row):
 def index_table(conn, table):
     """Index a single table into the vector store."""
     cur = conn.cursor()
-    cur.execute(f"PRAGMA table_info({table});")
+    cur.execute(f"PRAGMA table_xinfo({table});")
     cols = [c[1] for c in cur.fetchall()]
     cur.execute(f"SELECT {', '.join(cols)} FROM {table}")
     rows = cur.fetchall()
