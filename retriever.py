@@ -28,7 +28,7 @@ class RAGState(TypedDict, total=False):
 
 embeddings = HuggingFaceEmbeddings(model_name=os.getenv("EMBED_MODEL"))
 vectordb = Chroma(persist_directory=os.getenv("VECTOR_STORE_DIR"),
-                  embedding_function=embeddings, collection_name=os.getenv("VECTOR_COLLECTION"))
+                embedding_function=embeddings, collection_name=os.getenv("VECTOR_COLLECTION"))
 
 
 # Increments the number of documents retrieved for reranking,
@@ -52,14 +52,18 @@ def rerank_documents(question: str, docs: List, top_k: int = None) -> List:
     """
     if not docs:
         return []
+    
     if top_k is None:
         top_k = int(os.getenv("TOP_K", "5"))
+
     pairs = [(question, doc.page_content) for doc in docs]
+
     # Calc the estimated scores
     scores = rerank_model.predict(pairs)
     # make a combined list of docs and scores
     doc_scores = list(zip(docs, scores))
     doc_scores.sort(key=lambda x: x[1], reverse=True)
+
     # return the top_k documents
     reranked_docs = [doc for doc, _ in doc_scores[:top_k]]
     logging.info(
@@ -70,9 +74,9 @@ def rerank_documents(question: str, docs: List, top_k: int = None) -> List:
 def retriever_node(state: RAGState) -> RAGState:
     """
     Retrieves documents based on the given state.
-
     Args:
-        state (RAGState): The state containing the question.
+        state (RAGState): The state 
+        containing the question.
 
     Returns:
         RAGState: The updated state with retrieved documents.
