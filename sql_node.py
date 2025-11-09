@@ -2,14 +2,21 @@
 
 import re
 import os
+import logging
 
 
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
+
 from retriever_node import RAGState
 
+
 LLM = ChatGoogleGenerativeAI(model=os.getenv("LLM_MODEL"),
-                            temperature=0, api_key=os.getenv("LLM_API_KEY"))
+                                temperature=0, api_key=os.getenv("LLM_API_KEY"),
+                                    max_output_tokens=1024
+                                        )
+
+
 
 sql_agent_prompt = PromptTemplate.from_template("""
         You are a SQL generator. Based on the following context, generate a SINGLE READ-ONLY SQLite SELECT query (no semicolons, no multiple statements).
@@ -19,7 +26,10 @@ sql_agent_prompt = PromptTemplate.from_template("""
         Question:
         {question}
         
-        Return only the SQL SELECT statement.
+        Rules:
+        - Only generate SQL SELECT statements.
+        - Return only the SQL SELECT statement.
+                                                
         """)
 
 def sql_generator_node(state: RAGState) -> RAGState:
@@ -33,7 +43,7 @@ def sql_generator_node(state: RAGState) -> RAGState:
     # 2. Format the prompt
     prompt_text = sql_agent_prompt.format(context=context, question=state["question"])
 
-    # 3. Call the LLM asynchronously
+    # 3. Call the LLM
     out =  LLM.invoke(prompt_text)
 
     # 4. Extract text content if output is an AIMessage or ChatResult
