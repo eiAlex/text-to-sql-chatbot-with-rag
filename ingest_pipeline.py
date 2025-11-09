@@ -1,11 +1,13 @@
 '''Main module for the Text-to-SQL Chatbot with RAG application.
 '''
 import os
-import torch
 import sqlite3
 import hashlib
-from tqdm import tqdm
 import logging
+import torch
+
+
+from tqdm import tqdm
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
@@ -41,7 +43,7 @@ def row_to_text(table, cols, row):
 def index_table(conn, table):
     """Index a single table into the vector store."""
     cur = conn.cursor()
-    cur.execute(f"PRAGMA table_info({table});")
+    cur.execute(f"PRAGMA table_xinfo({table});")
     cols = [c[1] for c in cur.fetchall()]
     cur.execute(f"SELECT {', '.join(cols)} FROM {table}")
     rows = cur.fetchall()
@@ -70,11 +72,12 @@ def main():
     tables = [t[0] for t in cur.fetchall()]
     logging.info("Indexing %d tables.", len(tables))
 
-    for t in tqdm(tables, desc="Indexing tables"):
-        index_table(conn, t)
+    for table in tqdm(tables, desc="Indexing tables"):
+        index_table(conn, table)
 
     conn.close()
     logging.info("Indexing complete and persisted in Chroma.")
 
 if __name__ == "__main__":
     main()
+    logging.info("index_tables: Exiting.")
