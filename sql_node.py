@@ -2,8 +2,6 @@
 
 import re
 import os
-import logging
-
 
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -28,8 +26,7 @@ sql_agent_prompt = PromptTemplate.from_template("""
         
         Rules:
         - Only generate SQL SELECT statements.
-        - Return only the SQL SELECT statement.
-                                                
+        - Return only the SQL SELECT statement.                                                
         """)
 
 def sql_generator_node(state: RAGState) -> RAGState:
