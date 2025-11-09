@@ -1,11 +1,13 @@
 '''Main module for the Text-to-SQL Chatbot with RAG application.
 '''
 import os
-import torch
 import sqlite3
 import hashlib
-from tqdm import tqdm
 import logging
+import torch
+
+
+from tqdm import tqdm
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma

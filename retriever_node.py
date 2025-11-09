@@ -52,7 +52,7 @@ def rerank_documents(question: str, docs: List, top_k: int = None) -> List:
     """
     if not docs:
         return []
-    
+
     if top_k is None:
         top_k = int(os.getenv("TOP_K", "5"))
 
@@ -66,8 +66,7 @@ def rerank_documents(question: str, docs: List, top_k: int = None) -> List:
 
     # return the top_k documents
     reranked_docs = [doc for doc, _ in doc_scores[:top_k]]
-    logging.info(
-        f"Reranked {len(docs)} documents, returning top {len(reranked_docs)}")
+    logging.info("Reranked %s documents, returning top %s", len(docs), len(reranked_docs))
     return reranked_docs
 
 
