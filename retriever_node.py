@@ -92,4 +92,4 @@ def retriever_node(state: RAGState) -> RAGState:
     return state
 
 
-print(retriever_node({"question": "Comércio ABC S/A"}))
+# print(retriever_node({"question": "Comércio ABC S/A"}))

@@ -1,6 +1,10 @@
 version = 1
 revision = 3
 requires-python = ">=3.13"
+resolution-markers = [
+    "python_full_version >= '3.14'",
+    "python_full_version < '3.14'",
+]
 
 [[package]]
 name = "aiohappyeyeballs"
@@ -410,6 +414,15 @@ wheels = [
 ]
 
 [[package]]
+name = "filetype"
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/bb/29/745f7d30d47fe0f251d3ad3dc2978a23141917661998763bebb6da007eb1/filetype-1.2.0.tar.gz", hash = "sha256:66b56cd6474bf41d8c54660347d37afcc3f7d1970648de365c102ef77548aadb", size = 998020, upload-time = "2022-11-02T17:34:04.141Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/18/79/1b8fa1bb3568781e84c9200f951c735f3f157429f44be0495da55894d620/filetype-1.2.0-py2.py3-none-any.whl", hash = "sha256:7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25", size = 19970, upload-time = "2022-11-02T17:34:01.425Z" },
+]
+
+[[package]]
 name = "flatbuffers"
 version = "25.9.23"
 source = { registry = "https://pypi.org/simple" }
@@ -501,6 +514,44 @@ wheels = [
 ]
 
 [[package]]
+name = "google-ai-generativelanguage"
+version = "0.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-api-core", extra = ["grpc"] },
+    { name = "google-auth" },
+    { name = "grpcio" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ad/7e/67fdc46187541ead599e77f259d915f129c2f49568ebf5cadb322130712b/google_ai_generativelanguage-0.9.0.tar.gz", hash = "sha256:2524748f413917446febc8e0879dc0d4f026a064f89f17c42b81bea77ab76c84", size = 1481662, upload-time = "2025-10-20T14:56:23.123Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5d/91/c2d39ad5d77813afadb0f0b8789d882d15c191710b6b6f7cb158376342ff/google_ai_generativelanguage-0.9.0-py3-none-any.whl", hash = "sha256:59f61e54cb341e602073098389876594c4d12e458617727558bb2628a86f3eb2", size = 1401288, upload-time = "2025-10-20T14:52:58.403Z" },
+]
+
+[[package]]
+name = "google-api-core"
+version = "2.28.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-auth" },
+    { name = "googleapis-common-protos" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/61/da/83d7043169ac2c8c7469f0e375610d78ae2160134bf1b80634c482fa079c/google_api_core-2.28.1.tar.gz", hash = "sha256:2b405df02d68e68ce0fbc138559e6036559e685159d148ae5861013dc201baf8", size = 176759, upload-time = "2025-10-28T21:34:51.529Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/d4/90197b416cb61cefd316964fd9e7bd8324bcbafabf40eef14a9f20b81974/google_api_core-2.28.1-py3-none-any.whl", hash = "sha256:4021b0f8ceb77a6fb4de6fde4502cecab45062e66ff4f2895169e0b35bc9466c", size = 173706, upload-time = "2025-10-28T21:34:50.151Z" },
+]
+
+[package.optional-dependencies]
+grpc = [
+    { name = "grpcio" },
+    { name = "grpcio-status" },
+]
+
+[[package]]
 name = "google-auth"
 version = "2.43.0"
 source = { registry = "https://pypi.org/simple" }
@@ -583,6 +634,20 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/4a/45/122df922d05655f63930cf42c9e3f72ba20aadb26c100ee105cad4ce4257/grpcio-1.76.0-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:1c9b93f79f48b03ada57ea24725d83a30284a012ec27eab2cf7e50a550cbbbcc", size = 7592214, upload-time = "2025-10-21T16:22:33.831Z" },
     { url = "https://files.pythonhosted.org/packages/4a/6e/0b899b7f6b66e5af39e377055fb4a6675c9ee28431df5708139df2e93233/grpcio-1.76.0-cp314-cp314-win32.whl", hash = "sha256:747fa73efa9b8b1488a95d0ba1039c8e2dca0f741612d80415b1e1c560febf4e", size = 4062961, upload-time = "2025-10-21T16:22:36.468Z" },
     { url = "https://files.pythonhosted.org/packages/19/41/0b430b01a2eb38ee887f88c1f07644a1df8e289353b78e82b37ef988fb64/grpcio-1.76.0-cp314-cp314-win_amd64.whl", hash = "sha256:922fa70ba549fce362d2e2871ab542082d66e2aaf0c19480ea453905b01f384e", size = 4834462, upload-time = "2025-10-21T16:22:39.772Z" },
+]
+
+[[package]]
+name = "grpcio-status"
+version = "1.76.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "googleapis-common-protos" },
+    { name = "grpcio" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3f/46/e9f19d5be65e8423f886813a2a9d0056ba94757b0c5007aa59aed1a961fa/grpcio_status-1.76.0.tar.gz", hash = "sha256:25fcbfec74c15d1a1cb5da3fab8ee9672852dc16a5a9eeb5baf7d7a9952943cd", size = 13679, upload-time = "2025-10-21T16:28:52.545Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8c/cc/27ba60ad5a5f2067963e6a858743500df408eb5855e98be778eaef8c9b02/grpcio_status-1.76.0-py3-none-any.whl", hash = "sha256:380568794055a8efbbd8871162df92012e0228a5f6dffaf57f2a00c534103b18", size = 14425, upload-time = "2025-10-21T16:28:40.853Z" },
 ]
 
 [[package]]
@@ -904,6 +969,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/93/35/147544d3422464d13a8ef88f9e25cff25e02c985eb44f8c106503f56ad50/langchain_core-1.0.4.tar.gz", hash = "sha256:086d408bcbeedecb0b152201e0163b85e7a6d9b26e11a75cc577b7371291df4e", size = 776329, upload-time = "2025-11-07T22:30:45.669Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8e/ac/7032e5eb1c147a3d8e0a21a70e77d7efbd6295c8ce4833b90f6ff1750da9/langchain_core-1.0.4-py3-none-any.whl", hash = "sha256:53caa351d9d73b56f5d9628980f36851cfa725977508098869fdc2d246da43b3", size = 471198, upload-time = "2025-11-07T22:30:44.003Z" },
+]
+
+[[package]]
+name = "langchain-google-genai"
+version = "3.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "filetype" },
+    { name = "google-ai-generativelanguage" },
+    { name = "langchain-core" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b9/62/4352390e10b95d8a42da769b9bd7a7547af9aafd71e4012159f7394f7513/langchain_google_genai-3.0.1.tar.gz", hash = "sha256:d3f82fd274d2e9ca86448d5f89ac37b37b2d3cdfa6dec1af7bc792317b11dde7", size = 92794, upload-time = "2025-11-04T05:06:31.394Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/75/4f/4694f86ad0dfa920f8a7cd22000fa7f87e12551cbb40f26c40d5ce2c7205/langchain_google_genai-3.0.1-py3-none-any.whl", hash = "sha256:2420396c75d3911af42af1bffb2c2ddd3fff73f9db9d619963429b5385e5f55e", size = 58145, upload-time = "2025-11-04T05:06:30.514Z" },
 ]
 
 [[package]]
@@ -1708,6 +1788,18 @@ wheels = [
 ]
 
 [[package]]
+name = "proto-plus"
+version = "1.26.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f4/ac/87285f15f7cce6d4a008f33f1757fb5a13611ea8914eb58c3d0d26243468/proto_plus-1.26.1.tar.gz", hash = "sha256:21a515a4c4c0088a773899e23c7bbade3d18f9c66c73edd4c7ee3816bc96a012", size = 56142, upload-time = "2025-03-10T15:54:38.843Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4e/6d/280c4c2ce28b1593a19ad5239c8b826871fc6ec275c21afc8e1820108039/proto_plus-1.26.1-py3-none-any.whl", hash = "sha256:13285478c2dcf2abb829db158e1047e2f1e8d63a077d94263c2b88b043c75a66", size = 50163, upload-time = "2025-03-10T15:54:37.335Z" },
+]
+
+[[package]]
 name = "protobuf"
 version = "6.33.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2435,6 +2527,7 @@ dependencies = [
     { name = "fastapi" },
     { name = "langchain-chroma" },
     { name = "langchain-community" },
+    { name = "langchain-google-genai" },
     { name = "langchain-huggingface" },
     { name = "nvidia-cuda-runtime-cu12" },
     { name = "sentence-transformers" },
@@ -2448,6 +2541,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.121.0" },
     { name = "langchain-chroma", specifier = ">=1.0.0" },
     { name = "langchain-community", specifier = ">=0.4.1" },
+    { name = "langchain-google-genai", specifier = ">=3.0.1" },
     { name = "langchain-huggingface", specifier = ">=0.1.0" },
     { name = "nvidia-cuda-runtime-cu12", specifier = ">=12.8.90" },
     { name = "sentence-transformers", specifier = ">=5.1.2" },

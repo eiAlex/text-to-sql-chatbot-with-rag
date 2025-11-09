@@ -1,0 +1,62 @@
+'''SQL node'''
+
+import re
+import os
+
+
+from langchain_core.prompts import PromptTemplate
+from langchain_google_genai import ChatGoogleGenerativeAI
+from retriever_node import RAGState
+
+LLM = ChatGoogleGenerativeAI(model=os.getenv("LLM_MODEL"), temperature=0, api_key=os.getenv("LLM_API_KEY"))
+
+sql_agent_prompt = PromptTemplate.from_template("""
+        You are a SQL generator. Based on the following context, generate a SINGLE READ-ONLY SQLite SELECT query (no semicolons, no multiple statements).
+        Context:
+        {context}
+        
+        Question:
+        {question}
+        
+        Return only the SQL SELECT statement.
+        """)
+
+def sql_generator_node(state: RAGState) -> RAGState:
+    """
+    Generate SQL from the retrieved documents and user question.
+    Cleans LLM output, removes markdown/code fences, and ensures only SELECT statements remain.
+    """
+    # 1. Combine retrieved documents
+    context = "\n\n".join(state.get("retrieved_docs", ['Table: clientes\nid: 4\nnome: Comércio ABC S/A\nemail: financeiro@comercioabc.com.br\ntelefone: (21) 3333-2001\nendereco: Av. Rio Branco, 200\ncidade: Rio de Janeiro\nestado: RJ\ncep: 20040-020\ncnpj: 34.567.890/0001-12\ninscricao_estadual: 345.678.901.234\ntipo_cliente: Pessoa Jurídica\nsegmento_mercado: Varejo\ndata_cadastro: 2021-12-05\nlimite_credito: 50000\nativo: 1', 'Table: projetos\nid: 3\nnome: Consultoria ComércioABC\ndescricao: Consultoria para otimização de processos de TI\ncliente_id: 4\ndepartamento_id: 1\ngerente_projeto_id: 1\ndata_inicio: 2023-05-15\ndata_fim_prevista: 2024-02-28\ndata_fim_real: None\norcamento: 45000\ncusto_real: None\nprioridade: Alta\nstatus: Em Andamento', 'Table: departamentos\nid: 3\nnome: Vendas\ndescricao: Comercialização de produtos e serviços\ngerente_id: None\norcamento: 800000\nlocalizacao: São Paulo - SP\ncentro_custo: CC-VD-001', 'Table: fornecedores\nid: 3\nnome: EquipTech Solutions\nrazao_social: EquipTech Solutions Ltda\ncnpj: 33.444.555/0001-66\ninscricao_estadual: 345.678.901\nemail: atendimento@equiptech.com.br\ntelefone: (21) 3000-2001\nendereco: Av. Tecnologia, 800\ncidade: Rio de Janeiro\nestado: RJ\ncep: 20000-000\ncontato_principal: João Equipamentos\nprazo_entrega_medio: 20\ncondicoes_pagamento: 45 dias\navaliacao: 4.2\nativo: 1', 'Table: produtos\nid: 2\ncodigo_produto: CONS-001\nnome: Consultoria em TI\ndescricao: Consultoria especializada em tecnologia da informação\ncategoria: Serviços\nsubcategoria: Consultoria\npreco_venda: 150\ncusto_unitario: 100\nmargem_lucro: 33.3\nestoque_atual: 0\nestoque_minimo: 0\nestoque_maximo: 0\nunidade_medida: HR\nfornecedor_principal: XPTO Consultoria\nlocalizacao_estoque: N/A\nativo: 1']))
+
+    # 2. Format the prompt
+    prompt_text = sql_agent_prompt.format(context=context, question=state["question"])
+
+    # 3. Call the LLM asynchronously
+    out =  LLM.invoke(prompt_text)
+
+    # 4. Extract text content if output is an AIMessage or ChatResult
+    if hasattr(out, "content"):
+        out = out.content
+    out = str(out).strip()
+
+    # 5. Remove code fences ``` or ```sql and any leading/trailing whitespace
+    out = re.sub(r"```(?:sql)?\n?", "", out, flags=re.IGNORECASE).replace("```", "").strip()
+
+    # 6. Ensure the SQL starts with SELECT (case-insensitive)
+    match = re.search(r"(select\b.*)", out, flags=re.IGNORECASE | re.DOTALL)
+    if match:
+        out = match.group(1).strip()
+    else:
+        # fallback if no SELECT found
+        out = ""
+
+    # 7. Optional: remove trailing semicolon if present
+    out = out.rstrip(";").strip()
+
+    # 8. Save cleaned SQL back to state
+    state["generated_sql"] = out
+    return state
+
+
+#print(sql_generator_node({"question": "numero do Comércio ABC S/A"}))
