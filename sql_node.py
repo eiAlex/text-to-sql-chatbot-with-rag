@@ -8,7 +8,8 @@ from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from retriever_node import RAGState
 
-LLM = ChatGoogleGenerativeAI(model=os.getenv("LLM_MODEL"), temperature=0, api_key=os.getenv("LLM_API_KEY"))
+LLM = ChatGoogleGenerativeAI(model=os.getenv("LLM_MODEL"),
+                            temperature=0, api_key=os.getenv("LLM_API_KEY"))
 
 sql_agent_prompt = PromptTemplate.from_template("""
         You are a SQL generator. Based on the following context, generate a SINGLE READ-ONLY SQLite SELECT query (no semicolons, no multiple statements).
@@ -59,4 +60,4 @@ def sql_generator_node(state: RAGState) -> RAGState:
     return state
 
 
-#print(sql_generator_node({"question": "numero do Comércio ABC S/A"}))
+# print(sql_generator_node({"question": "numero do Comércio ABC S/A"}))

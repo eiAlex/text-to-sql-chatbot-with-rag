@@ -1,8 +1,8 @@
 '''
     Retriever module for the Text-to-SQL Chatbot with RAG application.
 '''
-import logging
 import os
+import logging
 from typing import List, TypedDict
 
 from dotenv import load_dotenv
@@ -66,7 +66,9 @@ def rerank_documents(question: str, docs: List, top_k: int = None) -> List:
 
     # return the top_k documents
     reranked_docs = [doc for doc, _ in doc_scores[:top_k]]
-    logging.info("Reranked %s documents, returning top %s", len(docs), len(reranked_docs))
+    
+    logging.info(f"Reranked {len(docs)} documents, returning top {len(reranked_docs)}")
+
     return reranked_docs
 
 

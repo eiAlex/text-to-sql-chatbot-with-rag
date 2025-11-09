@@ -80,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    logging.info("index_tables: Exiting.")
