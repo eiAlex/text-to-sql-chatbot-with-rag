@@ -44,4 +44,4 @@ def query(req: QueryRequest):
     result = [dict(zip(cols, r)) for r in rows]
     return {"sql": sql if req.show_sql else None, "cols": cols, "rows": result}
 
-print(query(QueryRequest(question="quantas vendas foram feitas em 24?")))
+# print(query(QueryRequest(question="quantas vendas foram feitas em 24?")))
